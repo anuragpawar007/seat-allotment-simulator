@@ -3,6 +3,7 @@
 This is a simple web-based simulator inspired by the JoSAA counseling process.  
 It allows users to select their preferred engineering branches and randomly allocates one based on predefined probabilities — simulating how a real seat allocation system might behave.
 
+[Click here to run the simulator]👉 (https://anuragpawar007.github.io/seat-allotment-simulator/)
 ---
 
 ## 🔧 Features
