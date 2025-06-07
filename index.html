@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Seat Allotment Simulator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #2b2b82;
+    }
+    select, button {
+      padding: 8px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Seat Allotment Simulator 🎓</h1>
+  <p>According to your preferred institute (IIT Jodhpur), the following branches are available to you:</p>
+
+  <div id="dropdowns"></div>
+  <button onclick="freezeChoices()">Freeze Choices</button>
+
+  <div id="result"></div>
+
+  <script>
+    const branches = [
+      "Computer Science & Engineering (CSE)",
+      "Artificial Intelligence and Data Science (AIDS)",
+      "Electrical Engineering (EE)",
+      "Mechanical Engineering (ME)",
+      "Chemical Engineering (CH)",
+      "Materials Engineering (MT)",
+      "Civil & Infrastructure Engineering (CI)"
+    ];
+
+    // Generate dropdowns dynamically
+    function generateDropdowns() {
+      const container = document.getElementById("dropdowns");
+      for (let i = 0; i < branches.length; i++) {
+        const select = document.createElement("select");
+        select.id = `pref${i}`;
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = `-- Select preference ${i + 1} --`;
+        select.appendChild(defaultOption);
+
+        for (const branch of branches) {
+          const option = document.createElement("option");
+          option.value = branch;
+          option.textContent = branch;
+          select.appendChild(option);
+        }
+
+        container.appendChild(select);
+        container.appendChild(document.createElement("br"));
+      }
+    }
+
+    // Allotment logic
+    function freezeChoices() {
+      const selected = [];
+      for (let i = 0; i < branches.length; i++) {
+        const value = document.getElementById(`pref${i}`).value;
+        if (!value) {
+          alert("Please fill all preferences.");
+          return;
+        }
+        selected.push(value);
+      }
+
+      if (new Set(selected).size !== branches.length) {
+        alert("Each branch should be selected only once.");
+        return;
+      }
+
+      const allotted = allotBranch(selected);
+      document.getElementById("result").textContent = `Congratulations!🎉
+ You have been allotted ${allotted} based on your Advanced rank(s)` ;
+
+      // Disable all dropdowns
+      for (let i = 0; i < branches.length; i++) {
+        document.getElementById(`pref${i}`).disabled = true;
+      }
+    }
+
+    function allotBranch(preferences) {
+      const rand = Math.random();
+      if (rand < 0.5) return preferences[0];       // 50% for 1st
+      else if (rand < 0.75) return preferences[1];  // 25% for 2nd
+      else if (rand < 0.90) return preferences[2];  // 15%
+      else if (rand < 0.96) return preferences[3];  // 6%
+      else if (rand < 0.98) return preferences[4];  // 2%
+      else if (rand < 0.99) return preferences[5];  // 1%
+      else return preferences[6];                   // 1%
+    }
+
+    // On load
+    generateDropdowns();
+  </script>
+
+</body>
+</html>
